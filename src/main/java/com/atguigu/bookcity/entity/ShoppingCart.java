@@ -23,7 +23,7 @@ public class ShoppingCart implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-      @TableId(value = "book_id", type = IdType.ASSIGN_ID)
+    @TableId(value = "book_id", type = IdType.ASSIGN_ID)
     private String bookId;
 
     private String userId;
