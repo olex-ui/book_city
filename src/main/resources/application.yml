@@ -5,3 +5,11 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: password
+
+#spring:
+#  datasource:
+#    type: com.alibaba.druid.pool.DruidDataSource
+#    url: jdbc:mysql://8.131.245.168:3333/bookcity?serverTimezone=GMT%2B8
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: root
+#    password: 2h7x8x7h8hxx
