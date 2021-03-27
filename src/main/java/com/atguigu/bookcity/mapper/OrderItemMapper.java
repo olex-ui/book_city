@@ -1,18 +1,14 @@
 package com.atguigu.bookcity.mapper;
 
 import com.atguigu.bookcity.entity.Category;
+import com.atguigu.bookcity.entity.orderItem;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * <p>
- *  Mapper 接口
- * </p>
- *
  * @author hxx
- * @since 2021-03-20
+ * @date 2021/3/26 23:07
  */
 @Mapper
-public interface CategoryMapper extends BaseMapper<Category> {
-
+public interface OrderItemMapper extends BaseMapper<orderItem> {
 }

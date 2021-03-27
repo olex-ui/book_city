@@ -9,5 +9,4 @@ import lombok.Data;
 public class orderVo {
     private String bookId;
     private Integer bookNumber;
-    private Integer status;
 }

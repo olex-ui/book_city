@@ -2,6 +2,7 @@ package com.atguigu.bookcity.mapper;
 
 import com.atguigu.bookcity.entity.ShoppingCart;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author hxx
  * @since 2021-03-20
  */
+@Mapper
 public interface ShoppingCartMapper extends BaseMapper<ShoppingCart> {
 
 }

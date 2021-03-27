@@ -21,7 +21,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value="Order对象")
-public class Order implements Serializable {
+public class OrderForm implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

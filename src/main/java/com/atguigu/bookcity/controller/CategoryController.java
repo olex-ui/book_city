@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  * @since 2021-03-19
  */
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/bookcity/category")
 public class CategoryController {
 
     @Resource

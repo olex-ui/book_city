@@ -1,7 +1,8 @@
 package com.atguigu.bookcity.mapper;
 
-import com.atguigu.bookcity.entity.Order;
+import com.atguigu.bookcity.entity.OrderForm;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author hxx
  * @since 2021-03-20
  */
-public interface OrderMapper extends BaseMapper<Order> {
+@Mapper
+public interface OrderMapper extends BaseMapper<OrderForm> {
 
 }

@@ -2,13 +2,14 @@ package com.atguigu.bookcity.service.impl;
 
 import com.atguigu.bookcity.Exception.bookCityException;
 import com.atguigu.bookcity.entity.ShoppingCart;
+import com.atguigu.bookcity.entity.vo.orderVo;
 import com.atguigu.bookcity.mapper.ShoppingCartMapper;
 import com.atguigu.bookcity.service.ShoppingCartService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import org.springframework.util.StringUtils;
 
 /**
  * <p>
@@ -22,27 +23,41 @@ import javax.servlet.http.HttpSession;
 public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, ShoppingCart> implements ShoppingCartService {
 
     @Override
-    public void addCart(String bookId, int number, HttpServletRequest httpServletRequest) {
-        HttpSession session = httpServletRequest.getSession();
-        String userId = (String) session.getAttribute("userId");
-        if (userId==null){
-            //验证登录
-            //待完善
-            throw new bookCityException(201,"添加失败，未登录");
+    public int addCart(String userId, orderVo orderVo) {
+        if (orderVo==null|| StringUtils.isEmpty(userId)){
+            throw new bookCityException(201,"信息为空");
         }
-
-        ShoppingCart cart = baseMapper.selectById(bookId);
-        if (cart!=null){
-            //购物车存在
-            cart.setBookNumber(cart.getBookNumber()+number);
-            baseMapper.updateById(cart);
-        }else{
-            //第一次购买
-
-            cart.setBookNumber(number);
-            cart.setUserId(userId);
-            baseMapper.insert(cart);
+        QueryWrapper<ShoppingCart> shoppingCartQueryWrapper = new QueryWrapper<>();
+        shoppingCartQueryWrapper.eq("user_id",userId);
+        shoppingCartQueryWrapper.eq("book_id",orderVo.getBookId());
+        ShoppingCart cart1 = baseMapper.selectOne(shoppingCartQueryWrapper);
+        if (cart1!=null){
+            cart1.setBookNumber(cart1.getBookNumber()+ orderVo.getBookNumber());
+            baseMapper.updateById(cart1);
+            return 1;
+        }else {
+            ShoppingCart shoppingCart = new ShoppingCart();
+            BeanUtils.copyProperties(orderVo,shoppingCart);
+            shoppingCart.setUserId(userId);
+            int insert = baseMapper.insert(shoppingCart);
+            return insert;
         }
+    }
 
+    @Override
+    public void updateNumber(String userId, orderVo orderVo) {
+        if (orderVo==null|| StringUtils.isEmpty(userId)){
+            throw new bookCityException(201,"信息为空");
+        }
+        QueryWrapper<ShoppingCart> cartQueryWrapper = new QueryWrapper<>();
+        cartQueryWrapper.eq("user_id",userId);
+        cartQueryWrapper.eq("book_id",orderVo.getBookId());
+        ShoppingCart cart1 = baseMapper.selectOne(cartQueryWrapper);
+        if (cart1!=null){
+            cart1.setBookNumber(orderVo.getBookNumber());
+            baseMapper.updateById(cart1);
+        }else {
+            throw new bookCityException(201,"信息为空");
+        }
     }
 }

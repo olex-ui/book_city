@@ -9,6 +9,4 @@ import lombok.Data;
 @Data
 public class orderResult {
     private String orderId;
-
-
 }

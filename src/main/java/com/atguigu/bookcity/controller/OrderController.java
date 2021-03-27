@@ -1,15 +1,14 @@
 package com.atguigu.bookcity.controller;
 
 
-import com.atguigu.bookcity.entity.Order;
+import com.atguigu.bookcity.entity.OrderForm;
+import com.atguigu.bookcity.entity.vo.orderVo;
 import com.atguigu.bookcity.service.OrderService;
 import com.atguigu.bookcity.vo.commonResult;
-import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,7 +21,7 @@ import java.util.List;
  * @since 2021-03-19
  */
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/bookcity/order")
 public class OrderController {
 
     @Resource
@@ -30,19 +29,18 @@ public class OrderController {
 
     @ApiOperation(value = "传递生成订单的商品的json形式的数组")
     @PostMapping("/createOrder")
-    public commonResult createOrder(){
-//        orderService.createOrder(orderVoList);
-        List<Order> list = orderService.list();
-
-        ArrayList<Order> orders = new ArrayList<>();
-//        orderService.saveBatch()
-        return commonResult.ok().data("list",list);
+    public commonResult createOrder(@RequestBody List<orderVo> orderVoList,
+                                    @RequestParam("userId") String userId){
+        if (orderService.createOrder(orderVoList,userId)){
+            return commonResult.ok();
+        }
+        return commonResult.error();
     }
 
     //点击付款后直接修改status
     @PostMapping("/updateStatus/{orderId}")
     public commonResult updateStatus(@PathVariable("orderId") String orderId){
-        Order order = new Order();
+        OrderForm order = new OrderForm();
         order.setId(orderId);
         order.setStatus(1);
         boolean b = orderService.updateById(order);
@@ -58,7 +56,7 @@ public class OrderController {
     @GetMapping("/getAllOrder/{userId}")
     public commonResult getAllOrder(@PathVariable("userId") String userId){
         HashMap<String,Object> resultMap=orderService.getorderMsg(userId);
-        return commonResult.ok().data();
+        return commonResult.ok().data(resultMap);
     }
 }
 

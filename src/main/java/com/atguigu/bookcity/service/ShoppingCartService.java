@@ -1,9 +1,8 @@
 package com.atguigu.bookcity.service;
 
 import com.atguigu.bookcity.entity.ShoppingCart;
+import com.atguigu.bookcity.entity.vo.orderVo;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -15,5 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface ShoppingCartService extends IService<ShoppingCart> {
 
-    void addCart(String bookId, int number, HttpServletRequest httpServletRequest);
+    int addCart(String userId, orderVo orderVo);
+
+    void updateNumber(String userId, orderVo orderVo);
 }
